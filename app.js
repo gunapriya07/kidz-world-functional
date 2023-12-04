@@ -1,142 +1,131 @@
-var cartValue = document.getElementById("cart-value");
-var cartButton = document.getElementById("cart");
+const cartValue = document.getElementById("cart-value");
+const cartBtn = document.getElementById("cart")
 
-var addButtons = document.getElementsByClassName("button");
+const addBtn = document.getElementsByClassName("button");
 
-var items = [
-  {
-    name: "This was our pact",
-    quantity: 0,
-    dollars: 7,
-    cents: 49,
-  },
-  {
-    name: "The famous five",
-    quantity: 0,
-    dollars: 4,
-    cents: 59,
-  },
-  {
-    name: "Matilda",
-    quantity: 0,
-    dollars: 6,
-    cents: 80,
-  },
-  {
-    name: "Harry Potter",
-    quantity: 0,
-    dollars: 10,
-    cents: 0,
-  },
-  {
-    name: "For Young Readers",
-    quantity: 0,
-    dollars: 7,
-    cents: 29,
-  },
-  {
-    name: "Wimpy Kid - DIY",
-    quantity: 0,
-    dollars: 4,
-    cents: 99,
-  },
-  {
-    name: "Dart Board",
-    quantity: 0,
-    dollars: 17,
-    cents: 49,
-  },
-  {
-    name: "Connect Four",
-    quantity: 0,
-    dollars: 19,
-    cents: 99,
-  },
-  {
-    name: "Jenga",
-    quantity: 0,
-    dollars: 20,
-    cents: 99,
-  },
-  {
-    name: "Monopoly",
-    quantity: 0,
-    dollars: 19,
-    cents: 49,
-  },
-  {
-    name: "Bookmarks",
-    quantity: 0,
-    dollars: 12,
-    cents: 49,
-  },
-  {
-    name: "Birthday Card",
-    quantity: 0,
-    dollars: 12,
-    cents: 49,
-  },
-  {
-    name: "Stuffed toys",
-    quantity: 0,
-    dollars: 15,
-    cents: 99,
-  },
-  {
-    name: "Dream catcher drawing",
-    quantity: 0,
-    dollars: 18,
-    cents: 49,
-  },
+let products = [
+    {
+        name: "This was our pact",
+        quantity: 0,
+        dollars: 7,
+        cents: 49,
+    },
+    {
+        name: "The famous five",
+        quantity: 0,
+        dollars: 4,
+        cents: 59,
+    },
+
+    {
+        name: "Matilda",
+        quantity: 0,
+        dollars: 6,
+        cents: 80,
+    },
+    {
+        name: "Harry Potter",
+        quantity: 0,
+        dollars: 10,
+        cents: 0,
+    },
+    {
+        name: "Four Young Readers",
+        quantity: 0,
+        dollars: 7,
+        cents: 29,
+    },
+    {
+        name: "Wimpy Kid-DIY",
+        quantity: 0,
+        dollars: 4,
+        cents: 99,
+    },
+    {
+        name: "Dar Board",
+        quantity: 0,
+        dollars: 17,
+        cents: 49,
+    },
+    {
+        name: "Connect4",
+        quantity: 0,
+        dollars: 19,
+        cents: 99,
+    },
+    {
+        name: "Jenga",
+        quantity: 0,
+        dollars: 20,
+        cents: 99,
+    },
+    {
+        name: "Monopoly",
+        quantity: 0,
+        dollars: 19,
+        cents: 49,
+    },
+    {
+        name: "Bookmarks",
+        quantity: 0,
+        dollars: 12,
+        cents: 49,
+    },
+    {
+        name: "Birthday card",
+        quantity: 0,
+        dollars: 19,
+        cents: 99,
+    },
+    {
+        name: "Stuffed toys",
+        quantity: 0,
+        dollars: 15,
+        cents: 99,
+    },
+    {
+        name: "Dream catcher drawing",
+        quantity: 0,
+        dollars: 15,
+        cents: 99,
+    },
 ];
 
-function updateCart() {
-  let cart = 0;
-  for (index = 0; index < items.length; index++) {
-    cart = cart + items[index].quantity;
-  }
-  cartValue.innerHTML = cart;
+let finalDollar = 0;
+let finalCents = 0;
+let cartCount=0;
+
+for (let i = 0; i < addBtn.length; i++) {
+    addBtn[i].onclick = () => {
+        products[i].quantity++;
+        // updateCart();
+        cartCount++;
+        cartValue.innerText = cartCount;
+    };
 }
-
-for (let i = 0; i < addButtons.length; i++) {
-  addButtons[i].onclick = (e) => {
-    items[i].quantity++;
-    updateCart();
-  };
-}
-
-var finalDollars = 0;
-var finalCents = 0;
-
 function updatePrice() {
-  let totalPriceInCents = 0;
-
-  for (index = 0; index < items.length; index++) {
-    totalPriceInCents =
-      totalPriceInCents +
-      items[index].quantity * (items[index].dollars * 100 + items[index].cents);
-  }
-  finalDollars = Math.floor(totalPriceInCents / 100);
-  finalCents = totalPriceInCents % 100;
-}
-
-
-cartButton.onclick = () => {
-  updatePrice();
-
-
-  for (let index = 0; index < items.length; index++) {
-    if (items[index].quantity != 0) {
-      console.log(
-        "Item name: " +
-          items[index].name +
-          " - Quantity: " +
-          items[index].quantity
-      );
+    let totalBill = 0;
+    for (let i = 0; i < products.length; i++) {
+        if (products[i].quantity > 0) {
+            totalBill += products[i].quantity * products[i].dollars * (100 + products[i].cents);
+        }
     }
-  }
+    finalDollar = Math.floor(totalBill / 100)
+    finalCents = totalBill % 100;
+}
+cartBtn.onclick = () => {
+    updatePrice();
 
-  console.log(
-    "The total amount is " + finalDollars + "$ and " + finalCents + " cents"
-  );
+       let message ="Order details "
+
+    for (let i = 0; i < products.length; i++) {
+        if (products[i].quantity != 0) {
+            console.log(`item name ${products[i].name}-Quantity:${products[i].quantity}.`
+            );
+               message+=`Item name ${products[i].name}-Quantity: ${products[i].quantity}.`;
+        }
+    }
+       message+=`The total amount is ${finalDollar}$ and ${finalCents} cents`;
+    console.log(`The total amount is ${finalDollar}$ and ${finalCents} cents`);
+       window.open(`https://wa.me/000000000?text=${message}`);
 };
